@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29609.76
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BW.StateMachine", "BWStateMachine\BW.StateMachine.csproj", "{D42CC76C-1C98-4E56-902F-1F77421B418A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BW.StateMachine.Unity", "BWUnityStateMachine\BW.StateMachine.Unity.csproj", "{5AF1CFB1-B9BF-403A-A912-D56E0D5D9A2A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D42CC76C-1C98-4E56-902F-1F77421B418A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D42CC76C-1C98-4E56-902F-1F77421B418A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D42CC76C-1C98-4E56-902F-1F77421B418A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D42CC76C-1C98-4E56-902F-1F77421B418A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5AF1CFB1-B9BF-403A-A912-D56E0D5D9A2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5AF1CFB1-B9BF-403A-A912-D56E0D5D9A2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5AF1CFB1-B9BF-403A-A912-D56E0D5D9A2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5AF1CFB1-B9BF-403A-A912-D56E0D5D9A2A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {84662CBA-35BB-4CE0-AA51-66D44C475767}
+	EndGlobalSection
+EndGlobal

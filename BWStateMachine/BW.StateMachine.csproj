@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>BW.StateMachine</AssemblyName>
+    <RootNamespace>BW.StateMachine</RootNamespace>
+  </PropertyGroup>
+
+</Project>
