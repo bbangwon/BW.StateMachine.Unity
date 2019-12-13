@@ -21,13 +21,8 @@
     /// 스테이트 머신 클래스(유니티)
     /// </summary>
     /// <typeparam name="T">스테이트(enum)</typeparam>
-    public class StateMachine<T> : StateMachine.StateMachine<T>, IUpdatable where T : struct
+    public class StateMachine<T> : StateMachine.StateMachine<T> where T : struct
     {
-        public StateMachine(T initState) : base(initState) => StateMachineRunner.Instance.AddUpdatable(this);
-        public void Update()
-        {
-            if (GetCurrentState is IUpdatable)
-                (GetCurrentState as IUpdatable).Update();
-        }
+        public StateMachine(T initState) : base(initState) => StateMachineRunner.Instance.AddUpdateAction(() => (GetCurrentState as IUpdatable)?.Update());
     }
 }

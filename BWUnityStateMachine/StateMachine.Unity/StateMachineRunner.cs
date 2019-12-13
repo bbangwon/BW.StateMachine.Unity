@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace BW.StateMachine.Unity
@@ -7,7 +8,7 @@ namespace BW.StateMachine.Unity
     {
         static StateMachineRunner instance = null;
         internal static StateMachineRunner Instance => instance ?? new GameObject("BW.StateMachine.Runner").AddComponent<StateMachineRunner>();
-        internal List<IUpdatable> updatables = null;
+        internal List<Action> updateActions = null;
         void Awake()
         {
             if(instance != null)
@@ -16,14 +17,14 @@ namespace BW.StateMachine.Unity
                 instance = this;
         }
 
-        internal void AddUpdatable(IUpdatable updatable)
+        internal void AddUpdateAction(Action updateAction)
         {
-            if (updatables == null)
-                updatables = new List<IUpdatable>();
+            if (updateActions == null)
+                updateActions = new List<Action>();
 
-            updatables.Add(updatable);
+            updateActions.Add(updateAction);
         }
 
-        void Update() => updatables?.ForEach(u => u.Update());
+        void Update() => updateActions?.ForEach(u => u?.Invoke());
     }
 }
