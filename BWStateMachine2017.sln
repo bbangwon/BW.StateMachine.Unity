@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.960
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BW.StateMachine", "BWStateMachine\BW.StateMachine.csproj", "{94C02CDA-3634-4DDF-AB2E-ECCFE079B2A2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BW.StateMachine.Unity", "BWUnityStateMachine\BW.StateMachine.Unity.csproj", "{79755286-B35C-4A44-9845-3AA9B9B375AC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{94C02CDA-3634-4DDF-AB2E-ECCFE079B2A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94C02CDA-3634-4DDF-AB2E-ECCFE079B2A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94C02CDA-3634-4DDF-AB2E-ECCFE079B2A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94C02CDA-3634-4DDF-AB2E-ECCFE079B2A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79755286-B35C-4A44-9845-3AA9B9B375AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79755286-B35C-4A44-9845-3AA9B9B375AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79755286-B35C-4A44-9845-3AA9B9B375AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79755286-B35C-4A44-9845-3AA9B9B375AC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B801A7C5-5908-4DE2-A0EA-518C5E4FD3B5}
+	EndGlobalSection
+EndGlobal
