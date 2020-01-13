@@ -3,6 +3,7 @@ using System.CodeDom;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.IO;
+using UnityEngine;
 
 namespace BW.StateMachine.Unity.Editor
 {
@@ -32,9 +33,11 @@ namespace BW.StateMachine.Unity.Editor
             CodeNamespace codeNamespace = new CodeNamespace();
 
             string filePath = Path.Combine(fileFolderName, stateMachineName + ".cs");
-            CodeTypeDeclaration machineCode = new CodeTypeDeclaration(stateMachineName);
-            machineCode.IsEnum = true;
-            machineCode.TypeAttributes = System.Reflection.TypeAttributes.Public;
+            CodeTypeDeclaration machineCode = new CodeTypeDeclaration(stateMachineName)
+            {
+                IsEnum = true,
+                TypeAttributes = System.Reflection.TypeAttributes.Public
+            };
 
             foreach (var item in stateNames)
                 machineCode.Members.Add(new CodeMemberField(stateMachineName, item));
@@ -53,34 +56,95 @@ namespace BW.StateMachine.Unity.Editor
 
                 string stateFilePath = Path.Combine(fileFolderName, item + ".cs");
 
-                CodeTypeDeclaration stateCode = new CodeTypeDeclaration(item);
-                stateCode.IsClass = true;
-                stateCode.BaseTypes.Add("StateBase<" + stateMachineName + ">");
-                stateCode.TypeAttributes = System.Reflection.TypeAttributes.Public;
+                CodeTypeDeclaration stateCode = new CodeTypeDeclaration(item)
+                {
+                    IsClass = true,
+                    TypeAttributes = System.Reflection.TypeAttributes.Public
+                };
+                stateCode.BaseTypes.Add($"StateBase<{stateMachineName}>");
 
-                CodeMemberMethod enterMethod = new CodeMemberMethod();
-                enterMethod.Attributes = MemberAttributes.Public | MemberAttributes.Override;
-                enterMethod.Name = "Enter";
-                enterMethod.ReturnType = new CodeTypeReference(typeof(void));
-                stateCode.Members.Add(enterMethod);
+                stateCode.Members.Add(new CodeMemberMethod
+                {
+                    Attributes = MemberAttributes.Public | MemberAttributes.Override,
+                    Name = "Enter",
+                    ReturnType = new CodeTypeReference(typeof(void))
+                });
 
-                CodeMemberMethod updateMethod = new CodeMemberMethod();
-                updateMethod.Attributes = MemberAttributes.Public | MemberAttributes.Override;
-                updateMethod.Name = "Update";
-                updateMethod.ReturnType = new CodeTypeReference(typeof(void));
-                stateCode.Members.Add(updateMethod);
+                stateCode.Members.Add(new CodeMemberMethod
+                {
+                    Attributes = MemberAttributes.Public | MemberAttributes.Override,
+                    Name = "Update",
+                    ReturnType = new CodeTypeReference(typeof(void))
+                });
 
-                CodeMemberMethod exitMethod = new CodeMemberMethod();
-                exitMethod.Attributes = MemberAttributes.Public | MemberAttributes.Override;
-                exitMethod.Name = "Exit";
-                exitMethod.ReturnType = new CodeTypeReference(typeof(void));
-                stateCode.Members.Add(exitMethod);
+                stateCode.Members.Add(new CodeMemberMethod
+                {
+                    Attributes = MemberAttributes.Public | MemberAttributes.Override,
+                    Name = "Exit",
+                    ReturnType = new CodeTypeReference(typeof(void))
+                });
 
                 stateCodeNamespace.Types.Add(stateCode);
                 stateUnit.Namespaces.Add(stateCodeNamespace);
 
                 GenerateCSharpCode(stateUnit, stateFilePath);
             }
+
+            //3. Using Class
+            CodeCompileUnit stateUseUnit = new CodeCompileUnit();
+            CodeNamespace stateUseCodeNamespace = new CodeNamespace();
+            stateUseCodeNamespace.Imports.Add(new CodeNamespaceImport("BW.StateMachine.Unity"));
+
+            string stateUseFileName = stateMachineName + "Behaviour";
+            string stateUseFilePath = Path.Combine(fileFolderName, stateUseFileName + ".cs");
+
+            CodeTypeDeclaration stateUseCode = new CodeTypeDeclaration(stateUseFileName)
+            {
+                IsClass = true,
+                TypeAttributes = System.Reflection.TypeAttributes.Public
+            };
+            stateUseCode.BaseTypes.Add(typeof(MonoBehaviour));
+
+            //Member Field             
+            var stateMachineCodeType = new CodeTypeReference("StateMachine", new CodeTypeReference(stateMachineName));
+            var stateMachineMemberFieldName = "stateMachine";
+            var stateMachineMemberGetPropertyName = "StateMachine";
+
+            stateUseCode.Members.Add(new CodeMemberField
+            {
+                Attributes = MemberAttributes.Private,
+                Name = stateMachineMemberFieldName,
+                Type = stateMachineCodeType
+            });
+
+            //Property
+            var stateUseCodeProperty = new CodeMemberProperty
+            {
+                Attributes = MemberAttributes.Public,
+                Name = stateMachineMemberGetPropertyName,
+                HasGet = true,
+                Type = stateMachineCodeType,
+            };
+            stateUseCodeProperty.GetStatements.Add(new CodeMethodReturnStatement(new CodeFieldReferenceExpression(new CodeThisReferenceExpression(), stateMachineMemberFieldName)));
+            stateUseCode.Members.Add(stateUseCodeProperty);            
+
+            CodeMemberMethod startMethod = new CodeMemberMethod
+            {
+                Name = "Start",
+                ReturnType = new CodeTypeReference(typeof(void))
+            };
+            startMethod.Statements.Add(
+                new CodeAssignStatement(new CodeFieldReferenceExpression(new CodeThisReferenceExpression(), stateMachineMemberFieldName),
+                        new CodeObjectCreateExpression(stateMachineCodeType, new CodeSnippetExpression($"{stateMachineName}.{stateNames[0]}")))
+                );
+
+            stateUseCode.Members.Add(startMethod);
+
+            stateUseCodeNamespace.Types.Add(stateUseCode);
+            stateUseUnit.Namespaces.Add(stateUseCodeNamespace);
+
+            GenerateCSharpCode(stateUseUnit, stateUseFilePath);
+
         }
     }
 }

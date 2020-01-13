@@ -47,9 +47,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="StateCodeGeneratorAsset.cs" />
     <Compile Include="StateCodeGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StateCodeGeneratorWindow.cs" />
+    <Compile Include="StateCodeGeneratorEditor.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BWUnityStateMachine\BW.StateMachine.Unity.csproj">
+      <Project>{79755286-b35c-4a44-9845-3aa9b9b375ac}</Project>
+      <Name>BW.StateMachine.Unity</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
